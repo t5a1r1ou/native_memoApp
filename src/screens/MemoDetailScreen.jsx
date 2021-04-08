@@ -64,7 +64,7 @@ const MemoDetailScreen = () => {
           sample sample sample sample sample sample sample sample sample
         </Text>
       </ScrollView>
-      <CircleButton style={buttonPosition} name="edit-2" />
+      <CircleButton style={buttonPosition} name="pencil" />
     </View>
   );
 };

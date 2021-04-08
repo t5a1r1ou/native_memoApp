@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { shape, string } from "prop-types";
 import { Feather } from "@expo/vector-icons";
+import Icon from "./Icon";
 
 const styles = StyleSheet.create({
   circleButton: {
@@ -27,7 +28,7 @@ const { circleButton } = styles;
 const CircleButton = ({ style, name }) => {
   return (
     <View style={[circleButton, style]}>
-      <Feather name={name} size={32} color="white" />
+      <Icon name={name} size={40} color="#fff" />
     </View>
   );
 };
