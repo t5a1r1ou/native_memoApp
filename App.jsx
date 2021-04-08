@@ -3,7 +3,7 @@ import MemoDetailScreen from "./src/screens/MemoDetailScreen";
 import MemoListScreen from "./src/screens/MemoListScreen";
 
 const App = () => {
-  return <MemoDetailScreen />;
+  return <MemoListScreen />;
 };
 
 export default App;
