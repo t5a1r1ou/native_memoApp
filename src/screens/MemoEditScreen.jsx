@@ -1,6 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TextInput, Alert } from "react-native";
-import AppBar from "../components/AppBar";
+import { View, StyleSheet, TextInput } from "react-native";
 import CircleButton from "../components/CircleButton";
 import KeyBoardSafeView from "../components/KeyBoardSafeView";
 
@@ -23,14 +22,13 @@ const styles = StyleSheet.create({
 
 const { container, input, inputContainer } = styles;
 
-const MemoEditScreen = () => {
+const MemoEditScreen = ({ navigation }) => {
   return (
     <KeyBoardSafeView style={container}>
-      <AppBar />
       <View style={inputContainer}>
         <TextInput value="買い物リスト" multiline style={input} />
       </View>
-      <CircleButton name="check" />
+      <CircleButton name="check" onPress={() => navigation.goBack()} />
     </KeyBoardSafeView>
   );
 };

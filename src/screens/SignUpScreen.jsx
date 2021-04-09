@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import AppBar from "../components/AppBar";
 import Button from "../components/Button";
 
 const styles = StyleSheet.create({
@@ -58,18 +57,32 @@ const {
   footerLink,
 } = styles;
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
   return (
     <View style={container}>
-      <AppBar />
       <View style={inner}>
         <Text style={title}>Sign Up</Text>
         <TextInput style={input} value="Email" />
         <TextInput style={input} value="Password" />
-        <Button label="Submit" />
+        <Button
+          label="Submit"
+          onPress={() =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "MemoList" }],
+            })
+          }
+        />
         <View style={footer}>
           <Text style={footerText}>Already resigtered?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "LogIn" }],
+              })
+            }
+          >
             <Text style={footerLink}>Log in.</Text>
           </TouchableOpacity>
         </View>
