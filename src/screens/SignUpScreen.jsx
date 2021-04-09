@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -58,12 +58,30 @@ const {
 } = styles;
 
 const SignUpScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <View style={container}>
       <View style={inner}>
         <Text style={title}>Sign Up</Text>
-        <TextInput style={input} value="Email" />
-        <TextInput style={input} value="Password" />
+        <TextInput
+          style={input}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          placeholder="Email Address"
+          textContentType="emailAddress"
+        />
+        <TextInput
+          style={input}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          autoCapitalize="none"
+          placeholder="Password"
+          textContentType="password"
+          secureTextEntry
+        />
         <Button
           label="Submit"
           onPress={() =>
