@@ -1,7 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { shape, string } from "prop-types";
-import { Feather } from "@expo/vector-icons";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "./Icon";
 
 const styles = StyleSheet.create({
@@ -25,21 +23,12 @@ const styles = StyleSheet.create({
 
 const { circleButton } = styles;
 
-const CircleButton = ({ style, name }) => {
+const CircleButton = ({ style, name, onPress = () => Alert.alert("test") }) => {
   return (
-    <View style={[circleButton, style]}>
+    <TouchableOpacity style={[circleButton, style]} onPress={onPress}>
       <Icon name={name} size={40} color="#fff" />
-    </View>
+    </TouchableOpacity>
   );
-};
-
-CircleButton.propTypes = {
-  style: shape(),
-  name: string.isRequired,
-};
-
-CircleButton.defaultProps = {
-  style: null,
 };
 
 export default CircleButton;

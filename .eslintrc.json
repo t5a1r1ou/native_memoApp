@@ -13,6 +13,7 @@
   },
   "plugins": ["react"],
   "rules": {
-    "quotes": "off"
+    "quotes": "off",
+    "react/prop-types": "off"
   }
 }

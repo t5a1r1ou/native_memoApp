@@ -7,7 +7,7 @@ import LogInScreen from "./src/screens/LogInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 
 const App = () => {
-  return <SignUpScreen />;
+  return <MemoListScreen />;
 };
 
 export default App;

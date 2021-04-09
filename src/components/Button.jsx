@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { string } from "prop-types";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -20,16 +19,12 @@ const styles = StyleSheet.create({
 
 const { buttonContainer, buttonLabel } = styles;
 
-const Button = ({ label }) => {
+const Button = ({ label, onPress }) => {
   return (
-    <View style={buttonContainer}>
+    <TouchableOpacity style={buttonContainer} onPress={onPress}>
       <Text style={buttonLabel}>{label}</Text>
-    </View>
+    </TouchableOpacity>
   );
-};
-
-Button.propTypes = {
-  label: string.isRequired(),
 };
 
 export default Button;

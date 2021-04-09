@@ -1,39 +1,49 @@
-import React, { useRef, useState, useEffect } from 'react';
-import {
-  Keyboard, Dimensions, Animated, ViewPropTypes,
-} from 'react-native';
-import { node } from 'prop-types';
+import React, { useRef, useState, useEffect } from "react";
+import { Keyboard, Dimensions, Animated, ViewPropTypes } from "react-native";
 
-export default function KeyboardSafeView({ children, style }) {
+const KeyBoardSafeView = ({ children, style }) => {
   const initialViewHeight = useRef(null);
   const animatedViewHeight = useRef(null);
   const [viewHeight, setViewHeight] = useState(null);
 
   useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', handleShow);
-    Keyboard.addListener('keyboardDidHide', handleHide);
+    Keyboard.addListener("keyboardDidShow", handleShow);
+    Keyboard.addListener("keyboardDidHide", handleHide);
     return () => {
-      Keyboard.removeListener('keyboardDidShow', handleShow);
-      Keyboard.removeListener('keyboardDidHide', handleHide);
+      Keyboard.removeListener("keyboardDidShow", handleShow);
+      Keyboard.removeListener("keyboardDidHide", handleHide);
     };
   }, []);
 
   useEffect(() => {
-    if ([initialViewHeight, animatedViewHeight, viewHeight].some((val) => val === null)) { return; }
+    if (
+      [initialViewHeight, animatedViewHeight, viewHeight].some(
+        (val) => val === null
+      )
+    ) {
+      return;
+    }
     // height is not supported with useNativeDriver: true
     // https://github.com/react-native-community/react-native-modal/issues/163
     if (viewHeight === initialViewHeight.current) {
-      Animated.timing(animatedViewHeight.current,
-        { toValue: initialViewHeight.current, duration: 300, useNativeDriver: false }).start();
+      Animated.timing(animatedViewHeight.current, {
+        toValue: initialViewHeight.current,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
     } else {
-      Animated.timing(animatedViewHeight.current,
-        { toValue: viewHeight, duration: 300, useNativeDriver: false }).start();
+      Animated.timing(animatedViewHeight.current, {
+        toValue: viewHeight,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
     }
   }, [viewHeight]);
 
   const handleShow = ({ endCoordinates }) => {
     if (endCoordinates.height && initialViewHeight.current) {
-      const keyboardHeight = Dimensions.get('window').height - endCoordinates.screenY;
+      const keyboardHeight =
+        Dimensions.get("window").height - endCoordinates.screenY;
       setViewHeight(initialViewHeight.current - keyboardHeight);
     }
   };
@@ -52,22 +62,17 @@ export default function KeyboardSafeView({ children, style }) {
     }
   };
 
-  const animatedStyle = viewHeight ? {
-    height: animatedViewHeight.current,
-    flex: 0,
-  } : {};
+  const animatedStyle = viewHeight
+    ? {
+        height: animatedViewHeight.current,
+        flex: 0,
+      }
+    : {};
   return (
     <Animated.View style={[style, animatedStyle]} onLayout={handleLayout}>
       {children}
     </Animated.View>
   );
-}
-
-KeyboardSafeView.propTypes = {
-  children: node.isRequired,
-  style: ViewPropTypes.style,
 };
 
-KeyboardSafeView.defaultProps = {
-  style: null,
-};
+export default KeyBoardSafeView;

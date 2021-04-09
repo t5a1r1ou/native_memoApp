@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import Icon from "./Icon";
 
@@ -35,27 +35,36 @@ const MemoList = () => {
           <Text style={memoListItemTitle}>買い物リスト</Text>
           <Text style={memoListItemDate}>2021年4月8日 10:00</Text>
         </View>
-        <View>
-          <Icon name="delete" color="#b0b0b0" />
-        </View>
+        <TouchableOpacity>
+          <Icon name="delete" color="#b0b0b0" size={24} />
+        </TouchableOpacity>
       </View>
       <View style={memoListItem}>
         <View>
           <Text style={memoListItemTitle}>買い物リスト</Text>
           <Text style={memoListItemDate}>2021年4月8日 10:00</Text>
         </View>
-        <View>
-          <Icon name="delete" color="#b0b0b0" />
-        </View>
+        <TouchableOpacity>
+          <Icon name="delete" color="#b0b0b0" size={24} />
+        </TouchableOpacity>
       </View>
       <View style={memoListItem}>
         <View>
           <Text style={memoListItemTitle}>買い物リスト</Text>
           <Text style={memoListItemDate}>2021年4月8日 10:00</Text>
         </View>
+        <TouchableOpacity>
+          <Icon name="delete" color="#b0b0b0" size={24} />
+        </TouchableOpacity>
+      </View>
+      <View style={memoListItem}>
         <View>
-          <Icon name="delete" color="#b0b0b0" />
+          <Text style={memoListItemTitle}>買い物リスト</Text>
+          <Text style={memoListItemDate}>2021年4月8日 10:00</Text>
         </View>
+        <TouchableOpacity>
+          <Icon name="delete" color="#b0b0b0" size={24} />
+        </TouchableOpacity>
       </View>
     </View>
   );

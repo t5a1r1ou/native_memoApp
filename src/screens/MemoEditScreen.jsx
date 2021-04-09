@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { View, StyleSheet, TextInput, Alert } from "react-native";
 import AppBar from "../components/AppBar";
 import CircleButton from "../components/CircleButton";
 import KeyBoardSafeView from "../components/KeyBoardSafeView";
-
 
 const styles = StyleSheet.create({
   container: {
