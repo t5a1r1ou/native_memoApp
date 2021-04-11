@@ -5,7 +5,9 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import firebase from "firebase";
 import Button from "../components/Button";
 
 const styles = StyleSheet.create({
@@ -60,6 +62,22 @@ const {
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const handlePress = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MemoList" }],
+        });
+      })
+      .catch((err) => {
+        Alert.alert(err.code);
+      });
+  };
   return (
     <View style={container}>
       <View style={inner}>
@@ -82,15 +100,7 @@ const SignUpScreen = ({ navigation }) => {
           textContentType="password"
           secureTextEntry
         />
-        <Button
-          label="Submit"
-          onPress={() =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "MemoList" }],
-            })
-          }
-        />
+        <Button label="Submit" onPress={() => handlePress()} />
         <View style={footer}>
           <Text style={footerText}>Already resigtered?</Text>
           <TouchableOpacity
