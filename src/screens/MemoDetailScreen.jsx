@@ -73,7 +73,6 @@ const MemoDetailScreen = ({ navigation, route }) => {
     return unsubscribe;
   }, []);
 
-  console.log(id);
   return (
     <View style={container}>
       <View style={memoHeader}>
@@ -88,7 +87,12 @@ const MemoDetailScreen = ({ navigation, route }) => {
       <CircleButton
         style={buttonPosition}
         name="pencil"
-        onPress={() => navigation.navigate("MemoEdit")}
+        onPress={() =>
+          navigation.navigate("MemoEdit", {
+            id: memo.id,
+            bodyText: memo.bodyText,
+          })
+        }
       />
     </View>
   );
