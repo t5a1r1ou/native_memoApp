@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import firebase from "firebase";
 import Button from "../components/Button";
+import { translateErrors } from "../utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -75,7 +76,8 @@ const SignUpScreen = ({ navigation }) => {
         });
       })
       .catch((err) => {
-        Alert.alert(err.code);
+        const errMsg = translateErrors(err.code);
+        Alert.alert(errMsg.title, errMsg.description);
       });
   };
   return (

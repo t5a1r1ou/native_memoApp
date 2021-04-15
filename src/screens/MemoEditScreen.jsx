@@ -3,6 +3,7 @@ import { View, StyleSheet, TextInput, Alert } from "react-native";
 import firebase from "firebase";
 import CircleButton from "../components/CircleButton";
 import KeyBoardSafeView from "../components/KeyBoardSafeView";
+import { translateErrors } from "../utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +45,8 @@ const MemoEditScreen = ({ navigation, route }) => {
           navigation.goBack();
         })
         .catch((err) => {
-          Alert.alert(err.code);
+          const errMsg = translateErrors(err.code);
+          Alert.alert(errMsg.title, errMsg.description);
         });
     }
   };
