@@ -23,7 +23,7 @@ import {
   APP_ID,
 } from "react-native-dotenv";
 
-const Stack = createStackNavigator();
+require("firebase/firestore");
 
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -33,6 +33,8 @@ const firebaseConfig = {
   messagingSenderId: MESSAGING_SENDER_ID,
   appId: APP_ID,
 };
+
+const Stack = createStackNavigator();
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);

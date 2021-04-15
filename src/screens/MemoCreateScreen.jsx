@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import CircleButton from "../components/CircleButton";
 import KeyBoardSafeView from "../components/KeyBoardSafeView";
+import firebase from "firebase";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,12 +24,34 @@ const styles = StyleSheet.create({
 const { container, input, inputContainer } = styles;
 
 const MemoCreateScreen = ({ navigation }) => {
+  const [bodyText, setBodyText] = useState("");
+  const handlePress = () => {
+    const { currentUser } = firebase.auth();
+    const db = firebase.firestore();
+    const ref = db.collection(`users/${currentUser.uid}/memos`);
+    ref
+      .add({
+        bodyText,
+        updatedAt: new Date(),
+      })
+      .then((docRef) => {
+        console.log("Created!", docRef.id);
+        navigation.goBack();
+      })
+      .catch((err) => console.log("Error", err));
+  };
   return (
     <KeyBoardSafeView style={container}>
       <View style={inputContainer}>
-        <TextInput value="" multiline style={input} />
+        <TextInput
+          value={bodyText}
+          onChangeText={(text) => setBodyText(text)}
+          multiline
+          style={input}
+          autoFocus
+        />
       </View>
-      <CircleButton name="check" onPress={() => navigation.goBack()} />
+      <CircleButton name="check" onPress={handlePress} />
     </KeyBoardSafeView>
   );
 };
