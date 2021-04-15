@@ -27,8 +27,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 16,
   },
-  memoBody: {
-    paddingVertical: 32,
+  memoBodyInner: {
+    paddingTop: 32,
+    paddingBottom: 80,
     paddingHorizontal: 27,
   },
   memoText: {
@@ -46,7 +47,7 @@ const {
   memoHeader,
   memoTitle,
   memoDate,
-  memoBody,
+  memoBodyInner,
   memoText,
   buttonPosition,
 } = styles;
@@ -81,8 +82,10 @@ const MemoDetailScreen = ({ navigation, route }) => {
         </Text>
         <Text style={memoDate}>{dateToString(memo?.updatedAt)}</Text>
       </View>
-      <ScrollView style={memoBody}>
-        <Text style={memoText}>{memo?.bodyText}</Text>
+      <ScrollView>
+        <View style={memoBodyInner}>
+          <Text style={memoText}>{memo?.bodyText}</Text>
+        </View>
       </ScrollView>
       <CircleButton
         style={buttonPosition}

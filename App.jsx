@@ -1,4 +1,5 @@
 import React from "react";
+import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -16,7 +17,6 @@ import MemoEditScreen from "./src/screens/MemoEditScreen";
 import {
   API_KEY,
   AUTH_DOMAIN,
-  DATABASE_ID,
   PROJECT_ID,
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
@@ -34,11 +34,13 @@ const firebaseConfig = {
   appId: APP_ID,
 };
 
-const Stack = createStackNavigator();
-
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
+
+const Stack = createStackNavigator();
+
+LogBox.ignoreLogs(["Setting a timer"]);
 
 const App = () => {
   return (

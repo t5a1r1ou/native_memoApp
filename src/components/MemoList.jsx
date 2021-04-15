@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  memoInner: {
+    flex: 1,
+  },
   memoListItem: {
     backgroundColor: "#fff",
     flexDirection: "row",
@@ -43,6 +46,7 @@ const styles = StyleSheet.create({
 
 const {
   container,
+  memoInner,
   memoListItem,
   memoListItemDate,
   memoListItemTitle,
@@ -79,7 +83,7 @@ const MemoList = ({ memos }) => {
         style={memoListItem}
         onPress={() => navigation.navigate("MemoDetail", { id: item.id })}
       >
-        <View>
+        <View style={memoInner}>
           <Text style={memoListItemTitle} numberOfLines={1}>
             {item.bodyText}
           </Text>
