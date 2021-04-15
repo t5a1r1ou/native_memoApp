@@ -9,9 +9,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { dateToString } from "../utils";
 import Icon from "./Icon";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   memoListItem: {
     backgroundColor: "#fff",
     flexDirection: "row",
@@ -37,6 +41,7 @@ const styles = StyleSheet.create({
 });
 
 const {
+  container,
   memoListItem,
   memoListItemDate,
   memoListItemTitle,
@@ -50,13 +55,13 @@ const MemoList = ({ memos }) => {
     return (
       <TouchableOpacity
         style={memoListItem}
-        onPress={() => navigation.navigate("MemoDetail")}
+        onPress={() => navigation.navigate("MemoDetail", { id: item.id })}
       >
         <View>
           <Text style={memoListItemTitle} numberOfLines={1}>
             {item.bodyText}
           </Text>
-          <Text style={memoListItemDate}>{String(item.updatedAt)}</Text>
+          <Text style={memoListItemDate}>{dateToString(item.updatedAt)}</Text>
         </View>
         <TouchableOpacity
           style={memoDelete}
@@ -69,7 +74,7 @@ const MemoList = ({ memos }) => {
   };
 
   return (
-    <View>
+    <View style={container}>
       <FlatList
         data={memos}
         renderItem={renderItem}

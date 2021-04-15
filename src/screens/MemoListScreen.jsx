@@ -43,15 +43,6 @@ const MemoListScreen = ({ navigation }) => {
               updatedAt: updatedAt.toDate(),
             });
           });
-          // const userMemos = snapshot.map((doc) => {
-          //   const { id } = doc;
-          //   const { bodyText, updatedAt } = doc.data();
-          //   return {
-          //     id,
-          //     bodyText,
-          //     updatedAt,
-          //   };
-          // });
           setMemos(userMemos);
         },
         (err) => {

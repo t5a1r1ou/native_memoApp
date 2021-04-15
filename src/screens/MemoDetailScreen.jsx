@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import CircleButton from "../components/CircleButton";
+import firebase from "firebase";
+import { dateToString } from "../utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -49,18 +51,39 @@ const {
   buttonPosition,
 } = styles;
 
-const MemoDetailScreen = ({ navigation }) => {
+const MemoDetailScreen = ({ navigation, route }) => {
+  const [memo, setMemo] = useState(null);
+  const { id } = route.params;
+
+  useEffect(() => {
+    const { currentUser } = firebase.auth();
+    let unsubscribe = () => {};
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`/users/${currentUser.uid}/memos`).doc(id);
+      unsubscribe = ref.onSnapshot((doc) => {
+        const { bodyText, updatedAt } = doc.data();
+        setMemo({
+          bodyText,
+          id: doc.id,
+          updatedAt: updatedAt.toDate(),
+        });
+      });
+    }
+    return unsubscribe;
+  }, []);
+
+  console.log(id);
   return (
     <View style={container}>
       <View style={memoHeader}>
-        <Text style={memoTitle}>買い物リスト</Text>
-        <Text style={memoDate}>2021年4月8日 10:00</Text>
+        <Text style={memoTitle} numberOfLines={1}>
+          {memo?.bodyText}
+        </Text>
+        <Text style={memoDate}>{dateToString(memo?.updatedAt)}</Text>
       </View>
       <ScrollView style={memoBody}>
-        <Text style={memoText}>
-          samplesamplesamplesamplesamplesamplesamplesamplesamplesample sample
-          sample sample sample sample sample sample sample sample sample
-        </Text>
+        <Text style={memoText}>{memo?.bodyText}</Text>
       </ScrollView>
       <CircleButton
         style={buttonPosition}
