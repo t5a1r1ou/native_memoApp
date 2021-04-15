@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import firebase from "firebase";
 import Button from "../components/Button";
+import Loading from "../components/Loading";
 
 const styles = StyleSheet.create({
   container: {
@@ -62,6 +63,7 @@ const {
 const LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -70,12 +72,15 @@ const LogInScreen = ({ navigation }) => {
           index: 0,
           routes: [{ name: "MemoList" }],
         });
+      } else {
+        setLoading(false);
       }
     });
     return unsubscribe;
   }, []);
 
   const handlePress = () => {
+    setLoading(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -89,10 +94,14 @@ const LogInScreen = ({ navigation }) => {
       })
       .catch((err) => {
         Alert.alert(err.code);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
     <View style={container}>
+      <Loading isLoading={isLoading} />
       <View style={inner}>
         <Text style={title}>Log In</Text>
         <TextInput

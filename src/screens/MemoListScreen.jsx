@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import firebase from "firebase";
 
 import MemoList from "../components/MemoList";
 import CircleButton from "../components/CircleButton";
 import LogOutButton from "../components/LogOutButton";
+import Button from "../components/Button";
+import Loading from "../components/Loading";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,10 +15,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const { container } = styles;
+const emptyStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F0F4F8",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inner: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 18,
+    marginBottom: 24,
+  },
+  button: {
+    alignSelf: "center",
+  },
+});
 
 const MemoListScreen = ({ navigation }) => {
   const [memos, setMemos] = useState([]);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     navigation.setOptions({
       // eslint-disable-next-line react/display-name
@@ -29,6 +50,7 @@ const MemoListScreen = ({ navigation }) => {
     const db = firebase.firestore();
     let unsubscribe = () => {};
     if (currentUser) {
+      setLoading(true);
       const ref = db
         .collection(`users/${currentUser.uid}/memos`)
         .orderBy("updatedAt", "desc");
@@ -44,9 +66,11 @@ const MemoListScreen = ({ navigation }) => {
             });
           });
           setMemos(userMemos);
+          setLoading(false);
         },
         (err) => {
           console.log(err);
+          setLoading(false);
           Alert.alert("データの読み込みに失敗しました");
         }
       );
@@ -54,8 +78,24 @@ const MemoListScreen = ({ navigation }) => {
     return unsubscribe;
   }, []);
 
+  if (memos.length === 0) {
+    return (
+      <View style={emptyStyles.container}>
+        <Loading isLoading={isLoading} />
+        <View style={emptyStyles.inner}>
+          <Text style={emptyStyles.title}>最初のメモを作成しよう！</Text>
+          <Button
+            style={emptyStyles.button}
+            label="作成する"
+            onPress={() => navigation.navigate("MemoCreate")}
+          />
+        </View>
+      </View>
+    );
+  }
+
   return (
-    <View style={container}>
+    <View style={styles.container}>
       <MemoList memos={memos} />
       <CircleButton
         name="plus"
